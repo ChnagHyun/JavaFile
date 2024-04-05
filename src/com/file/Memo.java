@@ -77,20 +77,17 @@ public class Memo {
         System.out.println("비밀번호 : ");
         String pw = sc.nextLine();
         System.out.println("정보 : ");
-        String name = sc.nextLine();
-        String number = sc.nextLine();
-        String address = sc.nextLine();
 
-
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./users.txt", true))) {
-            writer.write(id + ":" + pw);
-            writer.newLine();
+        // 파일에서 사용자 정보를 읽어와서 일치하는지 확인
+        try (BufferedReader reader = new BufferedReader(new FileReader("./users.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length == 2 && parts[0].equals(id) && parts[1].equals(pw)) {
+                    return;
+                }
+            }
         }
-
-
-
-        // 회원정보 파일 저장
 
     }
 }
